@@ -1,0 +1,24 @@
+# Permalinks
+#
+# Use of `relative_permalinks` ensures post links from the index work properly.
+permalink:           pretty
+
+# Setup
+title:               cbrewster
+tagline:             'programming blog'
+description:         'I am a Computer Engineering and Computer Science student at Oklahoma Christia
+                      University. I am a <a href="https://www.rust-lang.org/">Rust</a> enthusiast and 
+                      a frequent contributer to <a href="https://github.com/servo/servo">Servo</a>.'
+baseurl:             ''
+paginate:            3
+
+# About/contact
+author:
+  name:              Connor Brewster
+  email:             connor.brewster@eagles.oc.edu
+
+# Custom vars
+version:             1.0.0
+
+# Gems
+gems: [jekyll-paginate]
