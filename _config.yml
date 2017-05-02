@@ -6,12 +6,11 @@ permalink: pretty
 # Setup
 title: cbrewster
 tagline: 'programming blog'
-description: 'I am a Computer Engineering and Computer Science student at Oklahoma Christia
-University. I am a <a href="https://www.rust-lang.org/">Rust</a> enthusiast and 
-a frequent contributer to <a href="https://github.com/servo/servo">Servo</a>.'
+description: 'Christian. Computer Engineering and Computer Science student at Oklahoma Christian University. I am a <a href="https://www.rust-lang.org/">Rust</a> enthusiast and a frequent contributer to <a href="https://github.com/servo/servo">Servo</a>.'
 baseurl: ''
 paginate: 3
 github_username: cbrewster
+twitter_username: cgbrewster
 
 # About/contact
 author:
