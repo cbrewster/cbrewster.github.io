@@ -3,5 +3,8 @@ _site
 .jekyll-metadata
 .DS_Store
 
+# Keep these local
+_drafts
+
 # Editors
 .vscode
