@@ -26,4 +26,6 @@ Web Components consist of the following 4 features:
 
 While I will only be implementing Custom Elements, I hope that it will kick off the movement to support all the needed features for Web Components.
 
+A log of my progress will be on my [gsoc2017 repo](https://github.com/cbrewster/gsoc2017) on GitHub.
+
 There will be more posts to come concerning implementing Custom Elements in Servo!
