@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>cbrewster &#8226; Adventures in GSoC 5</title>
+        <link href="/static/style.css" rel="stylesheet">
+    </head>
+    <body class="bg-gray-900">
+        <div class="container mx-auto">
+            <nav class="flex items-center">
+            <div class="flex-grow">
+                <a href="/" class="inline-block px-4 py-2 bg-blue-400">cbrewster</a>
+                <span class="ml-2 text-blue-400">Code 'n Stuff</span>
+            </div>
+            
+            <div>
+                <a class="text-blue-400 underline mr-2" href="/posts">Posts</a>
+                <a class="text-blue-400 underline mr-2" href="/about">About</a>
+            </div>
+            </nav>
+        </div>
+        
+        <div class="container mx-auto mt-8">
+            <h2 class="text-blue-400 text-4xl font-bold">Adventures in GSoC 5</h2>
+            
+            <h4 class="text-blue-200 font-semibold text-lg">
+                Written on Aug 07, 2017 by <span class="border-b-2 border-blue-200 border-dotted">Connor</span>
+            </h4>
+            
+            <div id="markdown" class="mt-4">
+                <p>During the last weeks, I finished adding <code>[CEReactions]</code> annotations where used in the spec and
+<a href="https://github.com/servo/servo/pull/17935">implemented</a> custom element upgrades.</p>
+<h2>Pull Requests:</h2>
+<ul>
+<li>Meregd <a href="https://github.com/servo/servo/pull/17761">#17761: Add [CEReactions] to webidls</a></li>
+<li>Opened <a href="https://github.com/servo/servo/pull/17935">#17935: Custom element upgrades</a></li>
+</ul>
+<h2>Overview</h2>
+<p>Custom element upgrades are the last major section of the custom element implementation. Upgrades
+handle scenarios where a custom element is created prior to it being defined. I have already written
+about custom element upgrades in another <a href="https://cbrewster.github.io/2017/06/08/custom-element-upgrades/">blog post</a>. The Servo
+implementation was rather straight forward; however, I did encounter an issue with the custom
+element spec and filed an issue <a href="https://github.com/whatwg/html/issues/2876">here</a>.</p>
+<h2>Next Steps</h2>
+<p>For the next couple weeks I will triage the remaining test failures. These failures are either due
+to an issue with my implementation or a missing implementation of a different spec in Servo (this
+includes Shadow DOM, the Selection API, and others). I added a <a href="https://github.com/cbrewster/gsoc2017/blob/master/notes/test_failures.md">file</a> to the gsoc
+repository that categorizes all the test failures. During the next week, I will finish investigating
+the test failures and create patches for any tests that are failing due to a mistake in the custom
+element implementation.</p>
+<p>For more information on my gsoc project, check out my <a href="https://github.com/cbrewster/gsoc2017/blob/master/proposal.md#schedule-of-deliverables">proposal and roadmap</a>.</p>
+
+            </div>
+            </div>
+        </div>
+        <footer class="p-8">
+            <p class="text-center text-blue-200">cbrewster &#8226; built with <a class="underline" href="https://github.com/cbrewster/brewblog">brewblog</a></p>
+        </footer>
+    </body>
+</html>

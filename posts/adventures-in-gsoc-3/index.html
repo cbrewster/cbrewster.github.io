@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>cbrewster &#8226; Adventures in GSoC 3</title>
+        <link href="/static/style.css" rel="stylesheet">
+    </head>
+    <body class="bg-gray-900">
+        <div class="container mx-auto">
+            <nav class="flex items-center">
+            <div class="flex-grow">
+                <a href="/" class="inline-block px-4 py-2 bg-blue-400">cbrewster</a>
+                <span class="ml-2 text-blue-400">Code 'n Stuff</span>
+            </div>
+            
+            <div>
+                <a class="text-blue-400 underline mr-2" href="/posts">Posts</a>
+                <a class="text-blue-400 underline mr-2" href="/about">About</a>
+            </div>
+            </nav>
+        </div>
+        
+        <div class="container mx-auto mt-8">
+            <h2 class="text-blue-400 text-4xl font-bold">Adventures in GSoC 3</h2>
+            
+            <h4 class="text-blue-200 font-semibold text-lg">
+                Written on Jul 07, 2017 by <span class="border-b-2 border-blue-200 border-dotted">Connor</span>
+            </h4>
+            
+            <div id="markdown" class="mt-4">
+                <p>During the last weeks, I landed the <a href="https://github.com/servo/servo/pull/17381">custom element creation PR</a> and implemented custom
+element callback reactions. I also spent some time in Hawaii! Anyways, back to business...</p>
+<h2>Pull Requests:</h2>
+<ul>
+<li>Merged <a href="https://github.com/servo/servo/pull/17381">#17381: Custom element creation</a></li>
+<li>Opened <a href="https://github.com/servo/servo/pull/17614">#17614: Implement custom element reactions</a></li>
+</ul>
+<h2>Overview</h2>
+<p>After finishing the remaining work on custom element creation, I began to implement custom element
+callback reactions. CE Reactions are complex and I initially split the task into three parts:</p>
+<ol>
+<li>Implement callback reactions.</li>
+<li>Implement the upgrade reaction.</li>
+<li>Implement the <code>[CEReactions]</code> WebIDL Attribute.</li>
+</ol>
+<p>After reading the spec more closely and begining on an initial implementation, I realized that it
+might not be possible to implement steps 1 and 2 without also imeplementing step 3. After more
+implementation, I finally concluded that the two can be implemented separately, but step 3 is a
+relatively easy step to implement anyways; however, I have decided to keep step 3 separate as it
+requires adding <code>[CEReactions]</code> in many <code>webidl</code> files and would be cleaner to review separately. I
+have allocated less than a week for that work.</p>
+<p>To understand my initial confusion, we will need to dive into the
+<a href="https://html.spec.whatwg.org/multipage/#custom-element-reactions">custom element reactions spec</a> and understand how reactions actually work. The
+implementation requires multiple stacks and queus which each have their own function. I will go over
+them briefly.</p>
+<h3>Stacks and Queues</h3>
+<h4>Custom Element Reaction Stack</h4>
+<p>This stack is the &quot;master&quot; stack. Each <em>unit of related similar-origin browsing contexts</em> (In
+Servo-land, a single script thread) contains one of these. Each item in this stack is an <em>element
+queue</em>. If the stack is not empty, it has a <em>current element queue</em> and it always has a special
+<em>element queue</em> called the <em>backup element queue</em>.</p>
+<h4>Element Queue</h4>
+<p>Each item in this queue is an <code>Element</code>. If an element is placed in this queue, it means that the
+element has reactions that need to be invoked.</p>
+<h4>Custom Element Reaction Queue</h4>
+<p>Every <code>Element</code> owns a <em>custom element reaction queue</em>. Each item in this queue is a reaction which
+is an enum with the following variants:</p>
+<ol>
+<li>Upgrade Reaction (To be implemented later).</li>
+<li>Callback Reaction with an associated callback function and list of arguments.</li>
+</ol>
+<h3><code>[CEReactions]</code> and Reaction Flow</h3>
+<p>All these queues and stacks make it seem like the reactions are overcomplicated; however, it was
+designed this way for a reason. When reactions are invoked, user script is also invoked. This could
+be very dangerous as the browser may be in the middle of an operation that could be messed up by the
+user script. The main goals of this implementation are to:</p>
+<ol>
+<li>Make reactions appear to be synchronously run from the perspective of the user script.</li>
+<li>Make sure all reactions are invoked in the correct order.</li>
+<li>Wait until returning to user script before invoking any reactions.</li>
+</ol>
+<p>To maintain both invariants, the idea is to mark all operations in the webidl interfaces that may
+trigger reactions. Before any of these operations are ran, a new <em>element queue</em> is pushed onto the
+<em>custom element reaction stack</em>. Whenever a reactions should be invoked, the reaction is queued on
+its associated element's <em>custom element reaction queue</em> and the element is added to the <em>current
+element queue</em> of the <em>custom element reaction stack</em>. After the operation is finished, the <em>current
+element queue</em> is popped and each element in the queue invokes all of the reactions in its queue in
+the proper order.</p>
+<p>This is where my confusion occurred with the necessity of <code>[CEReactions]</code> for step 1. There is one
+piece of information I did miss and that is the <em>backup element queue</em>. There are some
+user-initiated operations that may cause a reaction but do not go through a DOM interface. This
+would mean that the <em>custom element reaction stack</em> may not have a <em>current element queue</em>;
+instead the <em>backup element queue</em> is used and the reactions are invoked via a microtask.</p>
+<p>My <a href="https://github.com/servo/servo/pull/17614">current implementation</a> does not have the <code>[CEReactions]</code> attribute added to the webidl
+files. It relies on the <em>backup element queue</em> instead. The reactions are also invoked instantly
+rather than by a microtask. These changes are large and I think it is best to try to split the work
+into smaller chunks.</p>
+<h2>Next Steps</h2>
+<p>I have adjusted my roadmap to account for vacation and the change of order as I plan to finish
+<code>[CEReactions]</code> before implementing the upgrade reaction.</p>
+
+            </div>
+            </div>
+        </div>
+        <footer class="p-8">
+            <p class="text-center text-blue-200">cbrewster &#8226; built with <a class="underline" href="https://github.com/cbrewster/brewblog">brewblog</a></p>
+        </footer>
+    </body>
+</html>

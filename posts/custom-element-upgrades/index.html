@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>cbrewster &#8226; Custom Element Upgrades</title>
+        <link href="/static/style.css" rel="stylesheet">
+    </head>
+    <body class="bg-gray-900">
+        <div class="container mx-auto">
+            <nav class="flex items-center">
+            <div class="flex-grow">
+                <a href="/" class="inline-block px-4 py-2 bg-blue-400">cbrewster</a>
+                <span class="ml-2 text-blue-400">Code 'n Stuff</span>
+            </div>
+            
+            <div>
+                <a class="text-blue-400 underline mr-2" href="/posts">Posts</a>
+                <a class="text-blue-400 underline mr-2" href="/about">About</a>
+            </div>
+            </nav>
+        </div>
+        
+        <div class="container mx-auto mt-8">
+            <h2 class="text-blue-400 text-4xl font-bold">Custom Element Upgrades</h2>
+            
+            <h4 class="text-blue-200 font-semibold text-lg">
+                Written on Jun 08, 2017 by <span class="border-b-2 border-blue-200 border-dotted">Connor</span>
+            </h4>
+            
+            <div id="markdown" class="mt-4">
+                <p>I am implementing the Custom Element v1 spec in Servo this summer. While preparing for the work I have read over the spec a few times; however, it was not until recently that the upgrade algorithm began to make sense. The point of the algorithm is to handle custom elements that have been added to a document before they have been defined.</p>
+<p>Example:</p>
+<pre style="background-color:#2b303b;">
+<span style="color:#abb2bf;">&lt;</span><span style="color:#eb6772;">custom-element</span><span style="color:#abb2bf;">&gt;&lt;/</span><span style="color:#eb6772;">custom-element</span><span style="color:#abb2bf;">&gt;
+</span><span style="color:#abb2bf;">&lt;</span><span style="color:#eb6772;">script</span><span style="color:#abb2bf;">&gt;
+</span><span style="color:#eb6772;">customElements</span><span style="color:#abb2bf;">.</span><span style="color:#eb6772;">define</span><span style="color:#abb2bf;">(</span><span style="color:#9acc76;">&quot;custom-elements&quot;</span><span style="color:#abb2bf;">, </span><span style="color:#cd74e8;">class </span><span style="color:#f0c678;">CustomElement </span><span style="color:#cd74e8;">extends </span><span style="color:#9acc76;">HTMLElement </span><span style="color:#adb7c9;">{ </span><span style="color:#5cb3fa;">constructor</span><span style="color:#adb7c9;">() { </span><span style="color:#5ebfcc;">super</span><span style="color:#adb7c9;">(); } }</span><span style="color:#abb2bf;">)
+</span><span style="color:#abb2bf;">&lt;/</span><span style="color:#eb6772;">script</span><span style="color:#abb2bf;">&gt;
+</span></pre>
+<p>In this example, <code>custom-element</code> is added to the document before it has been defined, which means its constructor will not be run and thus will not behave as expected. To solve this problem, after a custom element definition is added to a registry, all the elements are traversed and any elements that match the local name of the new definition are upgraded.</p>
+<p>This seems odd at first because the custom element starts out as a HTMLElement, but should end up as a CustomElement after the upgrade algorithm. This all needs to be done without removing and re-adding a new element. We need to actually run the constructor against the already existing element.</p>
+<h2>HTMLConstructor</h2>
+<p>First, we need to take a detour and look at the <code>[HTMLConstructor]</code> WebIDL extended attribute. Before custom elements, you couldn't use a class to extend native elements like <code>HTMLElement</code> or <code>HTMLButtonElement</code>.</p>
+<p>Example:</p>
+class CustomElement extends HTMLElement {
+    constructor() {
+        super();
+    }
+}
+// Invalid:
+new CustomElement();
+<p>If you try this code you will probably get an error like <code>Illegal constructor</code>. This is because the native element doesn't expose a constructor (or at least not until custom elements came around). <code>HTMLConstructor</code> is a new constructor defined in the custom element spec that adds a constructor for most native HTML elements; however, it is not like a normal constructor.</p>
+<h6>Note: The call to the <code>HTMLConstructor</code> happens when <code>super()</code> is called in the subclass constructor.</h6>
+<p>The above example will only succeed if <code>CustomElement</code> is added to the custom element registry. This is due to the behavior of the <code>HTMLConstructor</code> defined in the spec. I won't go over that too much in detail (see <a href="https://html.spec.whatwg.org/multipage/dom.html#htmlconstructor">the spec</a> for more), but the important thing to note is that with the custom constructor, we have control over what <code>super()</code> actually returns. We can return a newly created element or an element that <em>already</em> exists. The latter is the important part when it comes to custom element upgrades.</p>
+<h2>Construction Stack</h2>
+<p>Every time a custom element is defined, a new custom element definition is added to the registry. This definition owns a construction stack which contains a list of elements or <em>already constructed markers</em>. The construction stack allows the magic of upgrades to happen. When upgrading an element we push the element onto the construction stack of the definition and then call <code>Construct</code> on the definition's constructor. This will call the user defined constructor, which in turn calls <code>super()</code>, which will then call the <code>HTMLConstructor</code>. When the <code>HTMLConstructor</code> is invoked by <code>super()</code>, it retrieves the proper custom element definition. The constructor checks the last element of the <em>construction stack</em>. If an entry exists and it is not the <em>already constructed marker</em>, the entry is replace with the marker and the element from the entry is returned. From here, the user-defined constructor is now run on top of the existing element.</p>
+<h2>The <code>is</code> Attribute</h2>
+<p>One oddity when looking at custom elements for the first time is the <code>is</code> attribute. The attribute is used when defining and creating Customized Built-In elements. These elements extend from elements other than <code>HTMLElement</code>, such as <code>HTMLButtonElement</code> or <code>HTMLInputElement</code>. <a href="http://caniuse.com/#feat=custom-elementsv1">Most browsers</a> do not even currently support Customized Built-In elements.</p>
+<p>The attribute exists because custom elements can be added to a document prior to being defined. If the element was defined with the local name without the <code>is</code> attribute for the Customized Built-In Elements, the proper element interface would be unknown until the custom element has been defined. If the wrong element interface is picked, the element cannot change from one element interface to another (e.g. <code>HTMLElement</code> to <code>HTMLButtonElement</code>). For this reason, the <code>is</code> attribute along with the local name of the extended element must be used so that the proper element interface for a given local name is always known.</p>
+<p>While the <code>is</code> attribute is not very ergonomic, there does not appear to be any way to get around it other than just not supporting/using it. One way to avoid this is to use Autonomous Custom Elements and wrap the element that needs to have custom behavior.</p>
+<p>While the upgrade algorithm does seem a bit odd at first, it ends up actually being a really clever way of solving the issue.</p>
+
+            </div>
+            </div>
+        </div>
+        <footer class="p-8">
+            <p class="text-center text-blue-200">cbrewster &#8226; built with <a class="underline" href="https://github.com/cbrewster/brewblog">brewblog</a></p>
+        </footer>
+    </body>
+</html>

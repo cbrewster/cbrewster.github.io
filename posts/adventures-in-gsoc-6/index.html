@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>cbrewster &#8226; Adventures in GSoC 6</title>
+        <link href="/static/style.css" rel="stylesheet">
+    </head>
+    <body class="bg-gray-900">
+        <div class="container mx-auto">
+            <nav class="flex items-center">
+            <div class="flex-grow">
+                <a href="/" class="inline-block px-4 py-2 bg-blue-400">cbrewster</a>
+                <span class="ml-2 text-blue-400">Code 'n Stuff</span>
+            </div>
+            
+            <div>
+                <a class="text-blue-400 underline mr-2" href="/posts">Posts</a>
+                <a class="text-blue-400 underline mr-2" href="/about">About</a>
+            </div>
+            </nav>
+        </div>
+        
+        <div class="container mx-auto mt-8">
+            <h2 class="text-blue-400 text-4xl font-bold">Adventures in GSoC 6</h2>
+            
+            <h4 class="text-blue-200 font-semibold text-lg">
+                Written on Aug 23, 2017 by <span class="border-b-2 border-blue-200 border-dotted">Connor</span>
+            </h4>
+            
+            <div id="markdown" class="mt-4">
+                <p>During the last weeks, I finished <a href="https://github.com/servo/servo/pull/17935">implementing</a> custom element upgrades and fixed various
+failing tests.</p>
+<h2>Pull Requests:</h2>
+<ul>
+<li>Merged <a href="https://github.com/servo/servo/pull/17935">#17935: Custom element upgrades</a></li>
+<li>Merged <a href="https://github.com/servo/servo/pull/18074">#18074: Enqueue attribute changed callback when replacing attr</a></li>
+<li>Merged <a href="https://github.com/servo/servo/pull/18092">#18092: Only run DOMTokenList update steps if token was found</a></li>
+<li>Merged <a href="https://github.com/servo/servo/pull/18146">#18146: Annotate insertAdjacentHTML with CEReactions</a></li>
+</ul>
+<h2>Overview</h2>
+<p>As I entered the final few weeks of the project, I began to triage and categorize the remaining
+custom element test failures. Some tests fail due to Servo missing an implementation of a different
+spec. This includes the Shadow DOM and various missing attributes. These tests are ok to remain
+failing as they do not siginify an issue with the custom element implementation.</p>
+<p>The triaging process involves picking a specific test failure and looking at the test itself. I look
+for any APIs that are used that servo does not implement. If there are none, I then run the test and
+find the failing assertion. This typically will give more insight into the problem. For example,
+an upgrade reaction may not occur like it should. Once I figure out what assertion is failing, I
+step through the Rust implementation and attempt to figure out why or why not certain reactions were
+triggered.</p>
+<p>The failures found in <a href="https://github.com/servo/servo/pull/18074">#18074</a> and <a href="https://github.com/servo/servo/pull/18146">#18146</a> were due to issues with the custom element
+implementation. The former failure was due to the attribute change callback not being fired when
+an attribute node was being replaced. The latter was due to Element's <code>insertAdjacentHTML</code> missing
+the <code>CEReactions</code> annotation.</p>
+<h2>Next Steps</h2>
+<p>This week is my final week on the project, I have a <a href="https://github.com/cbrewster/gsoc2017/blob/master/notes/test_failures.md">few more</a> test failures to look
+into. I will also be writing a blog post discussing my GSoC experience and the custom element
+implementation. The final goal is to enable custom element by default in Servo.</p>
+<p>For more information on my gsoc project, check out my <a href="https://github.com/cbrewster/gsoc2017/blob/master/proposal.md#schedule-of-deliverables">proposal and roadmap</a>.</p>
+
+            </div>
+            </div>
+        </div>
+        <footer class="p-8">
+            <p class="text-center text-blue-200">cbrewster &#8226; built with <a class="underline" href="https://github.com/cbrewster/brewblog">brewblog</a></p>
+        </footer>
+    </body>
+</html>
