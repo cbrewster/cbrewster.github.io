@@ -5,7 +5,7 @@ show_date = false
 
 @Content
 
-Hi, I'm Connor Brewster. I am a recent Computer Engineering graduate, but in my free time I enjoy software development.
+Hi, I'm Connor Brewster. I am a recent Computer Engineering graduate. In my free time I enjoy software development.
 
 Check out my open source projects on my [Github profile](https://github.com/cbrewster).
 
