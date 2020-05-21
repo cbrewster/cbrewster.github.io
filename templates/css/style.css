@@ -1,0 +1,63 @@
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
+#markdown h1 {
+    @apply text-4xl my-4;
+}
+
+#markdown h2 {
+    @apply text-3xl my-4;
+}
+
+#markdown h3 {
+    @apply text-2xl my-2;
+}
+
+#markdown h4 {
+    @apply text-lg my-2;
+}
+
+#markdown a:link {
+    @apply underline;
+}
+
+#markdown ul {
+    @apply list-disc ml-4;
+}
+
+#markdown ol {
+    @apply list-decimal ml-4;
+}
+
+#markdown hr {
+    @apply border-none my-4 h-px w-full bg-gray-500;
+}
+
+#markdown {
+    @apply text-lg text-white;
+}
+
+#markdown p {
+    @apply leading-loose my-4;
+}
+
+#markdown blockquote {
+    @apply border-l-4 border-blue-400 pl-8 text-gray-300 my-2;
+}
+
+#markdown code {
+    @apply text-white font-mono p-1 shadow-sm mx-1 rounded;
+    background-color: #2b303b;
+}
+
+#markdown pre {
+    @apply text-white font-mono px-4 py-2 rounded overflow-auto my-2;
+    background-color: #2b303b;
+}
+
+#markdown pre code {
+    @apply p-0 bg-transparent;
+}
