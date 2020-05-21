@@ -719,6 +719,11 @@ video {
   padding-bottom: 0.5rem;
 }
 
+.px-2 {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
 .px-4 {
   padding-left: 1rem;
   padding-right: 1rem;
@@ -851,4 +856,11 @@ video {
 #markdown pre code {
   padding: 0;
   background-color: transparent;
+}
+
+@media (min-width: 768px) {
+  .md\:px-0 {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
