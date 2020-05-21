@@ -657,6 +657,10 @@ video {
   border-bottom-width: 2px;
 }
 
+.block {
+  display: block;
+}
+
 .inline-block {
   display: inline-block;
 }
@@ -689,8 +693,26 @@ video {
   font-size: 1.125rem;
 }
 
+.text-2xl {
+  font-size: 1.5rem;
+}
+
+.text-3xl {
+  font-size: 1.875rem;
+}
+
 .text-4xl {
   font-size: 2.25rem;
+}
+
+.my-2 {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.my-4 {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 .mx-auto {
@@ -773,24 +795,36 @@ video {
   font-size: 2.25rem;
   margin-top: 1rem;
   margin-bottom: 1rem;
+  --text-opacity: 1;
+  color: #fc8181;
+  color: rgba(252, 129, 129, var(--text-opacity));
 }
 
 #markdown h2 {
   font-size: 1.875rem;
   margin-top: 1rem;
   margin-bottom: 1rem;
+  --text-opacity: 1;
+  color: #fc8181;
+  color: rgba(252, 129, 129, var(--text-opacity));
 }
 
 #markdown h3 {
   font-size: 1.5rem;
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
+  --text-opacity: 1;
+  color: #fc8181;
+  color: rgba(252, 129, 129, var(--text-opacity));
 }
 
 #markdown h4 {
   font-size: 1.125rem;
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
+  --text-opacity: 1;
+  color: #fc8181;
+  color: rgba(252, 129, 129, var(--text-opacity));
 }
 
 #markdown a:link {
@@ -821,12 +855,11 @@ video {
 #markdown {
   font-size: 1.125rem;
   --text-opacity: 1;
-  color: #fff;
-  color: rgba(255, 255, 255, var(--text-opacity));
+  color: #f7fafc;
+  color: rgba(247, 250, 252, var(--text-opacity));
 }
 
 #markdown p {
-  line-height: 2;
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
@@ -850,10 +883,11 @@ video {
   color: rgba(255, 255, 255, var(--text-opacity));
   font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   padding: 0.25rem;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
   margin-left: 0.25rem;
   margin-right: 0.25rem;
   border-radius: 0.25rem;
+  font-size: 0.875rem;
   background-color: #2b303b;
 }
 
@@ -866,16 +900,20 @@ video {
   padding-right: 1rem;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
   border-radius: 0.25rem;
   overflow: auto;
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
+  font-size: 0.875rem;
   background-color: #2b303b;
 }
 
 #markdown pre code {
   padding: 0;
   background-color: transparent;
+  box-shadow: none;
+  margin: 0;
 }
 
 @media (min-width: 768px) {
