@@ -23,7 +23,7 @@ etc... so why bother to build another one?
 I decided to build my own static site generator as a fun exercise. I don't plan
 to use many of the features available in preexisting site generators, so the 
 scope of Brewblog is rather small and I only plan to add features that I need 
-for this blog. This means I wouldn't really recommend using Brewblog for your 
+for this blog. This means I wouldn't recommend using Brewblog for your 
 own blog, but I won't stop you. Pull requests are welcome.
 
 I wanted a static site generator that could do the following:
@@ -40,34 +40,36 @@ templating, and syntax parsing.
 
 Brewblog provides a simple CLI for building and watching the static site.
 
-    $ brewblog --help   
-    brewblog 0.1.4
-    Connor Brewster
+```
+$ brewblog --help   
+brewblog 0.1.4
+Connor Brewster
 
-    USAGE:
-        brewblog <SUBCOMMAND>
+USAGE:
+    brewblog <SUBCOMMAND>
 
-    FLAGS:
-        -h, --help       Prints help information
-        -V, --version    Prints version information
+FLAGS:
+    -h, --help       Prints help information
+    -V, --version    Prints version information
 
-    SUBCOMMANDS:
-        build    Builds the static site
-        help     Prints this message or the help of the given subcommand(s)
-        new      Create a new static site
-        serve    Builds the static site and serves the site using a local server
+SUBCOMMANDS:
+    build    Builds the static site
+    help     Prints this message or the help of the given subcommand(s)
+    new      Create a new static site
+    serve    Builds the static site and serves the site using a local server
+```
 
-Prior to this project, I hadn't used Rust to write a CLI. I chose with a crate
-called [`clap`](https://github.com/clap-rs/clap) to build the CLI and it was 
+Brewblog was the first Rust CLI project I have worked on. I chose a crate called
+[`clap`](https://github.com/clap-rs/clap) to help build the CLI and it was 
 extremely simple to build out a simple CLI that felt very polished. I didn't 
 want to spend much time building an amazing interface since I'm likely to be the
-only user, but `clap` made building a user friendly CLI a _snap_.
+only user, but `clap` made building a user-friendly CLI a _snap_.
 
-Clap 3 provides some `derive` macros that makes building a CLI a breeze!
+Clap 3 provides some `derive` macros that make building a CLI a breeze!
 The derive macro lets you define the options you would like to allow via a
 struct and through annotations you can provide clap with extra information to
 output in the help command. Best of all, using the `derive` approach gives you
-stron guarantees about type safety.
+strong guarantees about type safety.
 
 ```rs
 #[derive(Clap, Debug)]
@@ -113,19 +115,21 @@ match opts.command {
 ```
 
 For such a small amount of code, you get an extremely friendly interface. Clap
-even provides helpful messages if a user accidentally mispells a command:
+even provides helpful messages if a user accidentally misspells a command:
 
-    $ brewblog server  
-    error: The subcommand 'server' wasn't recognized
+```
+$ brewblog server  
+error: The subcommand 'server' wasn't recognized
 
-            Did you mean 'serve'?
+        Did you mean 'serve'?
 
-    If you believe you received this message in error, try re-running with 'brewblog -- server'
+If you believe you received this message in error, try re-running with 'brewblog -- server'
 
-    USAGE:
-        brewblog <SUBCOMMAND>
+USAGE:
+    brewblog <SUBCOMMAND>
 
-    For more information try --help
+For more information try --help
+```
 
 The `new` command only creates a new directory at the moment, but I plan to add
 a basic template that can be used to spin up a new site.
@@ -143,7 +147,7 @@ directory:
 
 To render templates I used the [`tera`](https://github.com/Keats/tera) crate.
 Tera has a similar syntax to Jinja2. It allows you to pass in a context map
-which contains data that can be accessed in the templates. Additionally it
+that contains data that can be accessed in the templates. Additionally it
 comes with nice built-in functions. For example, the publication date on this
 post is formatted using the `date()` built-in.
 
@@ -157,24 +161,25 @@ pull parser for markdown written in Rust.
 
 One important feature of a programming blog is to have built-in syntax
 highlighting. While pulldown-cmark does not have this built-in, it is designed
-to be very extensible. I did some digging in the issues and 
+to be very extensible. I searched the project's issues and 
 [found](https://github.com/raphlinus/pulldown-cmark/issues/167) some
 approaches to syntax highlighting. In the end, I settled with an 
 [implementation](https://github.com/cbrewster/brewblog/blob/master/src/markdown.rs)
 that intercepts code blocks tagged with a language and inserts the highlighted
 code as HTML when the code block is closed.
 
-The ease of extensibility is a real testament to the nice archirecture of
+The ease of extensibility is a real testament to the nice architecture of
 pulldown-cmark.
 
 #### Page format
 
-Each markdown page is split into two section: `@Meta` and `@Content`. I know 
-this isn't very standard, but who cares. The content after `@Meta` is written
-in `toml` and it lets you provide some basic metadata about the page like the
-title, slug, author, and publication date. Everything following the `@Content`
-section is the markdown content for the page. The markdown does allow HTML as
-well if you need a bit more control over the output of the page.
+Each markdown page is split into two sections: `@Meta` and `@Content`. I know 
+this isn't very standard, but who cares, this is for fun. The content after 
+`@Meta` is written in `toml` and it lets you provide some basic metadata about 
+the page like the title, slug, author, and publication date. Everything 
+following the `@Content` section is the markdown content for the page. The 
+markdown does allow HTML as well if you need a bit more control over the output
+of the page.
 
 For example, this page starts with:
 ```rs
@@ -192,12 +197,12 @@ date = "2020-05-21"
 
 ### Blog Theme
 
-Brewblog does not really have a concept of a theme, it just renders templates
+Brewblog does not have a concept of a theme, it just renders templates
 from the templates directory. I wanted to create my own theme because most of
-the premade themes for other static site generators are either overused or don't
+the pre-made themes for other static site generators are either overused or don't
 look good.
 
-For this site in particular, I made a very simple theme using 
+For this site, in particular, I made a very simple theme using 
 [TailwindCSS](https://tailwindcss.com/). Tailwind provides a plethora of CSS
 utility classes which allow you to design websites without needing to touch much
 CSS. It also comes with a great default color palette, which I use here.
