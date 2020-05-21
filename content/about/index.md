@@ -4,8 +4,9 @@ author = "Connor"
 show_date = false
 
 @Content
+<img class="float-right m-4 w-64 h-64 rounded" src="/about/profile.jpg" alt="picture of Connor" />
 
-Hi, I'm Connor Brewster. I am a recent Computer Engineering graduate. In my free time I enjoy software development.
+### Hi, I'm Connor Brewster. I am a recent Computer Engineering graduate. In my free time I enjoy software development.
 
 Check out my open source projects on my [GitHub profile](https://github.com/cbrewster).
 

@@ -1,6 +1,7 @@
 module.exports = {
   purge: [
-    './**/*.html.tera'
+    './**/*.html.tera',
+    '../content/**/*.md'
   ],
   theme: {
     extend: {},
