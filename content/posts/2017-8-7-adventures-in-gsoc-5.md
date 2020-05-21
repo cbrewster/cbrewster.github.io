@@ -9,7 +9,7 @@ During the last weeks, I finished adding `[CEReactions]` annotations where used 
 [implemented][17935] custom element upgrades.
 
 ## Pull Requests:
- * Meregd [#17761: Add [CEReactions] to webidls][17761]
+ * Merged [#17761: Add [CEReactions] to webidls][17761]
  * Opened [#17935: Custom element upgrades][17935]
 
 ## Overview
