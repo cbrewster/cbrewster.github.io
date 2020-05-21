@@ -1,3 +1,3 @@
 # [cbrewster.dev](https://cbrewster.dev)
 
-Built with [brewblog](https://github.com/brewblog)
+Built with [brewblog](https://github.com/cbrewster/brewblog)
