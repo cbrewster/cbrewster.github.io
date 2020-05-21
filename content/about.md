@@ -7,7 +7,7 @@ show_date = false
 
 Hi, I'm Connor Brewster. I am a recent Computer Engineering graduate. In my free time I enjoy software development.
 
-Check out my open source projects on my [Github profile](https://github.com/cbrewster).
+Check out my open source projects on my [GitHub profile](https://github.com/cbrewster).
 
 I am known for programming in Rust and working on Mozilla project. I used to frequently contribute to the [Servo project](https://servo.org) and last summer I interned at Mozilla and worked on Firefox graphics. I implemented in the `backdrop-filter` property in Firefox, although it only works when WebRender is enabled.
 
