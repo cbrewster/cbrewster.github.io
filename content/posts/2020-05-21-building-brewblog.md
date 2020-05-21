@@ -33,8 +33,8 @@ I wanted a static site generator that could do the following:
  * Watch the content directory and update the output locally when files change
 
 For this project, I chose Rust because it's the language I most enjoy writing
-in. Also Rust has excellenct crates for crates for makrdown parsing, creating
-CLIs, templating, and syntax parsing.
+in. Also Rust has excellent crates for makrdown parsing, creating CLIs, 
+templating, and syntax parsing.
 
 ### Building a CLI (Command Line Interface) in Rust
 
