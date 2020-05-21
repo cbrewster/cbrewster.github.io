@@ -10,4 +10,5 @@ jobs:
       uses: cbrewster/brewblog-deploy-action@master
       env:
         PAGES_BRANCH: gh-pages
+        CNAME: cbrewster.dev
         TOKEN: ${{ secrets.TOKEN }}
