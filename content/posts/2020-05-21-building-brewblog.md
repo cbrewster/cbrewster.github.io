@@ -21,7 +21,7 @@ There are many great static site generators out there: Jekyll, Hugo, Zola,
 etc... so why bother to build another one?
 
 I decided to build my own static site generator as a fun exercise. I don't plan
-to use many of the features available in prexisting site generators, so the 
+to use many of the features available in preexisting site generators, so the 
 scope of Brewblog is rather small and I only plan to add features that I need 
 for this blog. This means I wouldn't really recommend using Brewblog for your 
 own blog, but I won't stop you. Pull requests are welcome.
@@ -33,7 +33,7 @@ I wanted a static site generator that could do the following:
  * Watch the content directory and update the output locally when files change
 
 For this project, I chose Rust because it's the language I most enjoy writing
-in. Also Rust has excellent crates for makrdown parsing, creating CLIs, 
+in. Also Rust has excellent crates for markdown parsing, creating CLIs, 
 templating, and syntax parsing.
 
 ### Building a CLI (Command Line Interface) in Rust
@@ -64,10 +64,10 @@ want to spend much time building an amazing interface since I'm likely to be the
 only user, but `clap` made building a user friendly CLI a _snap_.
 
 Clap 3 provides some `derive` macros that makes building a CLI a breeze!
-The derivce macro lets you define the options you would like to allow via a
+The derive macro lets you define the options you would like to allow via a
 struct and through annotations you can provide clap with extra information to
 output in the help command. Best of all, using the `derive` approach gives you
-stron garuntees about type safety.
+stron guarantees about type safety.
 
 ```rs
 #[derive(Clap, Debug)]
@@ -142,7 +142,7 @@ directory:
  * `index.html.tera` - Default template for generating an index of pages.
 
 To render templates I used the [`tera`](https://github.com/Keats/tera) crate.
-Terea has a similar syntax to Jinja2. It allows you to pass in a context map
+Tera has a similar syntax to Jinja2. It allows you to pass in a context map
 which contains data that can be accessed in the templates. Additionally it
 comes with nice built-in functions. For example, the publication date on this
 post is formatted using the `date()` built-in.
