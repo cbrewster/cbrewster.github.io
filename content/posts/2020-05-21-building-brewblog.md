@@ -198,14 +198,16 @@ date = "2020-05-21"
 ### Blog Theme
 
 Brewblog does not have a concept of a theme, it just renders templates
-from the templates directory. I wanted to create my own theme because most of
-the pre-made themes for other static site generators are either overused or don't
-look good.
+from the templates directory. Since I only plan to use this myself, it didn't
+seem worth trying to build in swappable theme setup. This may be an area to
+extend in the future, but a templates directory works for now.
 
-For this site, in particular, I made a very simple theme using 
-[TailwindCSS](https://tailwindcss.com/). Tailwind provides a plethora of CSS
-utility classes which allow you to design websites without needing to touch much
-CSS. It also comes with a great default color palette, which I use here.
+I built the theme for this site by hand. I aimed to create a simple layout
+with a nice dark color scheme. For this site, in particular, I made a very 
+simple theme using [TailwindCSS](https://tailwindcss.com/). Tailwind provides a 
+plethora of CSS utility classes which allow you to design websites without 
+needing to touch much CSS. It also comes with a great default color palette, 
+which I use here.
 
 Since Tailwind uses utility classes, markdown output will be unstyled by
 default. To make markdown rendered pages look nice, I wrote some custom

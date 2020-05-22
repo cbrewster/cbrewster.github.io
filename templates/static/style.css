@@ -792,39 +792,43 @@ video {
 }
 
 #markdown h1 {
+  font-weight: 800;
   font-size: 2.25rem;
   margin-top: 1rem;
   margin-bottom: 1rem;
   --text-opacity: 1;
-  color: #fc8181;
-  color: rgba(252, 129, 129, var(--text-opacity));
+  color: #fff;
+  color: rgba(255, 255, 255, var(--text-opacity));
 }
 
 #markdown h2 {
+  font-weight: 800;
   font-size: 1.875rem;
   margin-top: 1rem;
   margin-bottom: 1rem;
   --text-opacity: 1;
-  color: #fc8181;
-  color: rgba(252, 129, 129, var(--text-opacity));
+  color: #fff;
+  color: rgba(255, 255, 255, var(--text-opacity));
 }
 
 #markdown h3 {
+  font-weight: 800;
   font-size: 1.5rem;
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
   --text-opacity: 1;
-  color: #fc8181;
-  color: rgba(252, 129, 129, var(--text-opacity));
+  color: #fff;
+  color: rgba(255, 255, 255, var(--text-opacity));
 }
 
 #markdown h4 {
+  font-weight: 800;
   font-size: 1.125rem;
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
   --text-opacity: 1;
-  color: #fc8181;
-  color: rgba(252, 129, 129, var(--text-opacity));
+  color: #fff;
+  color: rgba(255, 255, 255, var(--text-opacity));
 }
 
 #markdown a:link {
