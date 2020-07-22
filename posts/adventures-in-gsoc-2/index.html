@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>cbrewster &#8226; Adventures in GSoC 2</title>
+        <link href="/static/style.css" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body class="bg-gray-900 px-2 md:px-0">
+        <div class="container mx-auto">
+            <nav class="flex items-center">
+            <div class="flex-grow">
+                <a href="/" class="inline-block px-4 py-2 bg-blue-400">cbrewster</a>
+                <span class="ml-2 text-blue-400">Code 'n Stuff</span>
+            </div>
+            
+            <div>
+                <a class="text-blue-400 underline mr-2" href="/posts">Posts</a>
+                <a class="text-blue-400 underline mr-2" href="/about">About</a>
+            </div>
+            </nav>
+        </div>
+        
+        <div class="container mx-auto mt-8">
+            <h2 class="text-blue-400 text-4xl font-bold">Adventures in GSoC 2</h2>
+            
+            <h4 class="text-blue-200 font-semibold text-lg">
+                Written on Jun 19, 2017 by <span class="border-b-2 border-blue-200 border-dotted">Connor</span>
+            </h4>
+            
+            <div id="markdown" class="mt-4">
+                <p>During the last week, I finished up the remaining work on implementing the <code>[HTMLConstructor]</code>
+WebIDL extended attribute and implemented custom elements into element creation.</p>
+<h2>Pull Requests:</h2>
+<ul>
+<li>Merged <a href="https://github.com/servo/servo/pull/17224">#17224: WebIDL HTMLConstructor support</a></li>
+<li>Opened <a href="https://github.com/servo/servo/pull/17381">#17381: Custom element creation </a></li>
+</ul>
+<h2>Overview</h2>
+<p>As I finished up the remaining work on <a href="https://github.com/servo/servo/pull/17224">#17224</a>, I began to focus on the
+<a href="https://dom.spec.whatwg.org/#concept-create-element"><em>create an element</em></a> steps which was the original goal for this week and last
+week according to my <a href="https://github.com/cbrewster/gsoc2017/blob/master/proposal.md#schedule-of-deliverables">roadmap</a>.</p>
+<p>After <code>[HTMLConstructor]</code> was implemented, the implementation for the <em>create and element</em> steps was
+straightforward.</p>
+<p>The first step was to add a lookup by local name method for the <code>CustomElementRegistry</code> and use that
+to find any custom element definition if one exists when creating an element.</p>
+<p>The next step was to add a method to <code>CustomElementDefinition</code> which constructs a new element from
+the definition. When creating a new element, this method is used under the following conditions:</p>
+<ol>
+<li>The definition is for an <em>Autonomous Custom Element</em>.</li>
+<li>The <em>synchronous custom elements flag</em> is set.</li>
+</ol>
+<p>If those conditions are unmet and a custom element definition was found, a custom element upgrade
+reaction is used to setup the custom element. I have not implemented reactions or upgrades yet, so
+I left this portion unimplemented.</p>
+<p>I also added the beginning support for the <code>is</code> attribute and wired up the <em>synchronous custom
+elements flag</em>.</p>
+<h2>Next Steps</h2>
+<p>According to the <a href="https://github.com/cbrewster/gsoc2017/blob/master/proposal.md#schedule-of-deliverables">roadmap</a>, the next step is to implement custom element reactions
+(June 18 - July 1).</p>
+<p>This includes the following:</p>
+<ol>
+<li>Validating and storing <em>lifecycle callbacks</em> and <em>observed attributes</em> when a new custom element
+is defined.</li>
+<li>Implementing the various custom element reaction queues.</li>
+<li>Enqueueing the callback reactions where appropriate.</li>
+</ol>
+<p>This does not include implementing upgrade reactions or the <code>[CEReactions]</code> WebIDL extended
+attribute.</p>
+
+            </div>
+            </div>
+        </div>
+        <footer class="p-8">
+            <p class="text-center text-blue-200">cbrewster &#8226; built with <a class="underline" href="https://github.com/cbrewster/brewblog">brewblog</a></p>
+        </footer>
+    </body>
+</html>

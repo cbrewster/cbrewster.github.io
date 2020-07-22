@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>cbrewster &#8226; Adventures in GSoC 4</title>
+        <link href="/static/style.css" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body class="bg-gray-900 px-2 md:px-0">
+        <div class="container mx-auto">
+            <nav class="flex items-center">
+            <div class="flex-grow">
+                <a href="/" class="inline-block px-4 py-2 bg-blue-400">cbrewster</a>
+                <span class="ml-2 text-blue-400">Code 'n Stuff</span>
+            </div>
+            
+            <div>
+                <a class="text-blue-400 underline mr-2" href="/posts">Posts</a>
+                <a class="text-blue-400 underline mr-2" href="/about">About</a>
+            </div>
+            </nav>
+        </div>
+        
+        <div class="container mx-auto mt-8">
+            <h2 class="text-blue-400 text-4xl font-bold">Adventures in GSoC 4</h2>
+            
+            <h4 class="text-blue-200 font-semibold text-lg">
+                Written on Jul 18, 2017 by <span class="border-b-2 border-blue-200 border-dotted">Connor</span>
+            </h4>
+            
+            <div id="markdown" class="mt-4">
+                <p>During the last week, I landed <a href="https://github.com/servo/servo/pull/17614">custom element reactions</a> and opened a <a href="https://github.com/servo/servo/pull/17761">PR</a> to add the
+<code>[CEReactions]</code> extended attribute to all the webidl files according to their spec.</p>
+<h2>Pull Requests:</h2>
+<ul>
+<li>Merged <a href="https://github.com/servo/servo/pull/17614">#17614: Implement custom element reactions</a></li>
+<li>Opened <a href="https://github.com/servo/servo/pull/17761">#17761: Add [CEReactions] to webidls</a></li>
+</ul>
+<h2>Overview</h2>
+<p>This week's work has been rather straight-foward. Once <a href="https://github.com/servo/servo/pull/17614">custom element reactions</a> were
+implemented, I needed to sprinkle <code>[CEReactions]</code> everywhere in the webidl files. This process
+consisted of going through each webidl file in Servo, going to its associated spec and checking
+if any of the attributes or methods needed to be annotated with <code>[CEReactions]</code>.</p>
+<p>The <code>[CEReactions]</code> extended attribute marks any attributes or methods that can somehow trigger
+a custom element reaction. Extra code is added in the codegen stage that handles the custom element
+reactions. This code catches all reactions that should be invoked and waits until Servo is returning
+to author script before invoking any of the reactions.</p>
+<p>I am now investigating the test failures to see if I missed any places where callback reactions
+should be enqueued.</p>
+<h2>Next Steps</h2>
+<p>The next step, implementing the upgrade reactions, is the final large step in implementing custom
+elements! The upgrade reaction handles taking an uncustomized element and upgrading it into a custom
+element. This can occur if an element using a custom element name is added to a document and later
+a custom element definition is added to the registry with that name. The element is then upgraded
+using this new definition. See the following example:</p>
+<pre style="background-color:#2b303b;">
+<span style="color:#cd74e8;">class </span><span style="color:#f0c678;">MyCustomElement </span><span style="color:#cd74e8;">extends </span><span style="color:#9acc76;">HTMLElement </span><span style="color:#adb7c9;">{
+</span><span style="color:#adb7c9;">    </span><span style="color:#5cb3fa;">constructor</span><span style="color:#adb7c9;">() {
+</span><span style="color:#adb7c9;">        </span><span style="color:#5ebfcc;">super</span><span style="color:#adb7c9;">()
+</span><span style="color:#adb7c9;">    }
+</span><span style="color:#adb7c9;">}
+</span><span style="color:#abb2bf;">
+</span><span style="font-style:italic;color:#5f697a;">// This creates a regular HTMLElement that has a valid custom element name
+</span><span style="color:#cd74e8;">var </span><span style="color:#adb7c9;">element = </span><span style="color:#abb2bf;">document.</span><span style="color:#5ebfcc;">createElement</span><span style="color:#abb2bf;">(</span><span style="color:#9acc76;">&#39;my-custom-element&#39;</span><span style="color:#abb2bf;">)
+</span><span style="color:#abb2bf;">document.body.</span><span style="color:#eb6772;">append</span><span style="color:#abb2bf;">(</span><span style="color:#adb7c9;">element</span><span style="color:#abb2bf;">)
+</span><span style="font-style:italic;color:#5f697a;">// Now create a custom element definition with the previously used custom element name.
+</span><span style="font-style:italic;color:#5f697a;">// This will trigger an upgrade reaction for `element`
+</span><span style="color:#eb6772;">customElements</span><span style="color:#abb2bf;">.</span><span style="color:#eb6772;">define</span><span style="color:#abb2bf;">(</span><span style="color:#9acc76;">&#39;my-custom-element&#39;</span><span style="color:#abb2bf;">, </span><span style="color:#adb7c9;">MyCustomElement</span><span style="color:#abb2bf;">)
+</span></pre>
+<p>Check out my <a href="https://cbrewster.github.io/2017/06/08/custom-element-upgrades/">blog post</a> on custom element upgrades for more information on
+how the upgrade reaction is implemented.</p>
+<p>For more information on my gsoc project, check out my <a href="https://github.com/cbrewster/gsoc2017/blob/master/proposal.md#schedule-of-deliverables">proposal and roadmap</a>.</p>
+
+            </div>
+            </div>
+        </div>
+        <footer class="p-8">
+            <p class="text-center text-blue-200">cbrewster &#8226; built with <a class="underline" href="https://github.com/cbrewster/brewblog">brewblog</a></p>
+        </footer>
+    </body>
+</html>

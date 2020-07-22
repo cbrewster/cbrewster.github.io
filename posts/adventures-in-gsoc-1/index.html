@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>cbrewster &#8226; Adventures in GSoC 1</title>
+        <link href="/static/style.css" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body class="bg-gray-900 px-2 md:px-0">
+        <div class="container mx-auto">
+            <nav class="flex items-center">
+            <div class="flex-grow">
+                <a href="/" class="inline-block px-4 py-2 bg-blue-400">cbrewster</a>
+                <span class="ml-2 text-blue-400">Code 'n Stuff</span>
+            </div>
+            
+            <div>
+                <a class="text-blue-400 underline mr-2" href="/posts">Posts</a>
+                <a class="text-blue-400 underline mr-2" href="/about">About</a>
+            </div>
+            </nav>
+        </div>
+        
+        <div class="container mx-auto mt-8">
+            <h2 class="text-blue-400 text-4xl font-bold">Adventures in GSoC 1</h2>
+            
+            <h4 class="text-blue-200 font-semibold text-lg">
+                Written on Jun 12, 2017 by <span class="border-b-2 border-blue-200 border-dotted">Connor</span>
+            </h4>
+            
+            <div id="markdown" class="mt-4">
+                <p>During the last week, I worked on implementing the <code>[HTMLConstructor]</code> WebIDL extended attribute.</p>
+<h2>Pull Requests:</h2>
+<ul>
+<li>Opened <a href="https://github.com/servo/servo/pull/17224">#17224: WebIDL HTMLConstructor support</a></li>
+<li>Opened <a href="https://github.com/servo/servo/pull/17250">#17250: Unwrap function before calling IsConstructor</a></li>
+</ul>
+<h2>Blog Posts</h2>
+<ul>
+<li><a href="https://cbrewster.github.io/2017/06/08/custom-element-upgrades/">Understanding Custom Element Upgrades</a></li>
+</ul>
+<h2>Overview</h2>
+<p>According to my <a href="https://github.com/cbrewster/gsoc2017/blob/master/proposal.md">roadmap</a>, I will have the custom element portion of the <a href="https://dom.spec.whatwg.org/#concept-create-element"><em>create an element</em></a> steps implemented by the end of this next week.</p>
+<p>I began working on implementing the steps according to the <a href="https://dom.spec.whatwg.org/#concept-create-element">spec</a>, but I ran into issues at Step 6.1.2. The call to <code>Construct</code> was failing for every custom element constructor that I tried. A javascript exception was always thrown at the line in the constructor that calls the superclass's constructor.</p>
+<pre><code class="language-javascript">class CustomElement extends HTMLElement {
+    constructor() {
+        super(); // Error: Invalid constructor.
+    }
+}
+
+customElements.define('custom-element', CustomElement);
+</code></pre>
+<p>I scratched my head at this issue, as the spec is clear that the superclass's constructor must be called once in the subclass's constructor. I consulted with other Servo developers on IRC. I found out that HTML elements don't have a constructor exposed to JS; therefore, the call to the superclass's (<code>HTMLElement</code> in this case) fails because the <code>HTMLElement</code> interface does not expose a constructor.</p>
+<p>When Custom Elements were added to the spec, special constructors were added to certain HTML elements via the <code>[HTMLConstructor]</code> extended attribute.</p>
+<p>Before I could begin work on implementing custom elements in <code>document.createElement</code>, I had to implement <a href="https://html.spec.whatwg.org/multipage/dom.html#htmlconstructor"><code>HTMLConstructor</code></a>.</p>
+<h2>Next Steps</h2>
+<p>During this week I finished the first pass at the implementation and plan to have it polished and merged by the middle of this next week.</p>
+<p>Once merged, I will finish the work on implementing the <a href="https://dom.spec.whatwg.org/#concept-create-element"><em>create an element</em></a> steps by the end of this next week.</p>
+
+            </div>
+            </div>
+        </div>
+        <footer class="p-8">
+            <p class="text-center text-blue-200">cbrewster &#8226; built with <a class="underline" href="https://github.com/cbrewster/brewblog">brewblog</a></p>
+        </footer>
+    </body>
+</html>
